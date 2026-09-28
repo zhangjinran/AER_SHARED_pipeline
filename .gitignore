@@ -3,6 +3,9 @@
 !/.gitignore
 !/code/
 !/docs/
+!/inputs/
+/inputs/*
+!/inputs/priors/
 
 # Scientific inputs and editor recovery files are not source code.
 /code/*.mat

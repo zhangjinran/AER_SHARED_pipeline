@@ -1,6 +1,6 @@
 # 当前生产基线（2026-09-28）
 
-本文件用于区分“仓库里保存的历史代码”和“现在生产中使用的科学/产品版本”。Git 纳入 `code/` 的文本源码及 `docs/`，但**纳入版本控制不等于被选为当前生产入口**。`products/`、`runs/`、`inputs/`、`report/`、MAT 和图像仍留在原处，不提交到 Git。当前重构目录前，请先核对所有硬编码路径；不得仅凭源码文件名移动在用入口。
+本文件用于区分“仓库里保存的历史代码”和“现在生产中使用的科学/产品版本”。Git 纳入 `code/` 的文本源码、`docs/` 和 `inputs/priors/` 的已选先验；**纳入版本控制不等于被选为当前生产入口**。`products/`、`runs/`、其他 `inputs/` 原始数据、`report/` 和图像不提交到 Git。当前重构目录前，请先核对所有硬编码路径；不得仅凭源码文件名移动在用入口。
 
 | 支路 | 当前输入与生产身份 | 当前入口/核心 | 状态与边界 |
 |---|---|---|---|
@@ -11,7 +11,7 @@
 | AOD v2 | **原生全球 APro，不经过 T_all**；`aod-month__global-apro__avd2__profile-pooled__grid5deg-v2` | `code/aod/science_core/integrate_aod_apro_orbit.m`、`code/aod/batch/run_aod_apro_month.m` | 原生整条廓线积分；两个 AVD half-layer 分开处理。|
 | AERONET / Chapter4 | 当前读取 T_all v2，但卫星粒径谱反演仍用旧先验和旧函数 | `code/batch/run_chapter4_month.m` → `code/consumers/chapter4/ARONET_CALIPSO_Fast_Collocation.m` → `code/functions/Fun_CALIPSO_Calculation_dVdlnr_dNdlnr_Nd_Consider_Hyg_Integral.m` | **不是 Chapter4_v2 微物理基线**。新先验/共同 OMCAM 湿谱适配尚未实施；Figure 4.4 使用模拟 RH，不能作为物理归因证据。|
 
-正式 OMCAM-v2 先验不入 Git，位于 `inputs/priors/ccn_v2/omcam_v2__acp-table4-unitgate-v1/`。两文件在 2026-09-28 核验时的 SHA-256：`Parameter_OMCAM_v2.mat` 为 `A5C581CA5553872EA2AD4F367EDD55327516D2986C92363F2A14A373536E746C`；`Extinction_Normalized_v2.mat` 为 `BB07736C0C1E0CE1C66BC5B5875A4DBF54F29CB362042D9F84865F`。代码里的 Marine 新参数为细/粗体积分数 `0.14/0.86`、平均**半径** `0.1137/1.8756 µm`、几何标准差 `1.6487/2.0544`、532 nm 折射率实部 `1.5478/1.4108`、虚部 `0.0053/0`。完整基线及与论文的边界见 `docs/architecture/Tallv2_CCNv2_Chapter5v2_baseline_20260928.md`。
+正式 OMCAM-v2 先验纳入 Git，位于 `inputs/priors/ccn_v2/omcam_v2__acp-table4-unitgate-v1/`。两文件在 2026-09-28 核验时的 SHA-256：`Parameter_OMCAM_v2.mat` 为 `A5C581CA5553872EA2AD4F367EDD55327516D2986C92363F2A14A373536E746C`；`Extinction_Normalized_v2.mat` 为 `BB07736C0C1E0CE1C66BC5B5875A4DBF54F29CB36204245D3BEC042D9F84865F`。代码里的 Marine 新参数为细/粗体积分数 `0.14/0.86`、平均**半径** `0.1137/1.8756 µm`、几何标准差 `1.6487/2.0544`、532 nm 折射率实部 `1.5478/1.4108`、虚部 `0.0053/0`。完整基线及与论文的边界见 `docs/architecture/Tallv2_CCNv2_Chapter5v2_baseline_20260928.md`。
 
 **T_all v2 的 AVD 分类规则**：读取适配器将 AVD 归一化为 `[profile, altitude, plane]`；`build_calipso_step1_day.m` 只取 `AVD(:,:,1)`。该平面经 `bitand(AVD,7)` 得到 feature type，经 `bitand(bitshift(AVD,-9),7)` 得到 aerosol subtype。第 2 个 AVD half-layer 不参与 T_all 分类；AOD v2 则处理两者。这是当前代码实际行为，不应误画成相同前处理。
 

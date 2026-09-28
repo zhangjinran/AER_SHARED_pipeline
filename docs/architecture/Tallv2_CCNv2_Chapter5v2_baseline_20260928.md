@@ -23,7 +23,7 @@ Chapter5_v2 月产品另使用正式日晴空统计：
 | 文件 | SHA-256（2026-09-28 核对） |
 |---|---|
 | `Parameter_OMCAM_v2.mat` | `A5C581CA5553872EA2AD4F367EDD55327516D2986C92363F2A14A373536E746C` |
-| `Extinction_Normalized_v2.mat` | `BB07736C0C1E0CE1C66BC5B5875A4DBF54F29CB362042D9F84865F` |
+| `Extinction_Normalized_v2.mat` | `BB07736C0C1E0CE1C66BC5B5875A4DBF54F29CB36204245D3BEC042D9F84865F` |
 
 `Parameter_OMCAM_v2.mat` 的 `data` 结构沿用旧六类型数组顺序 `[CM, DU, PC, CC, PD, SM]`；运行核心只使用五个物理组分 `[CM, DU, PC, CC, SM]`。逐项核对后，五组分的 10 个粒径/折射率数组字段与 `code/CCN_v2/config/ccn_v2_config.m` 完全一致（数值容差 `1e-9`）。其中最新版 Marine 明确为：
 

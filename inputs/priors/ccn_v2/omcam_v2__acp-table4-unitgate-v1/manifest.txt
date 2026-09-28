@@ -1,0 +1,6 @@
+schema=omcam-v2
+unit_gate=PASS
+marine_shape=sphere
+dust_shape=spheroid
+rh_grid=0:99
+status=IMMUTABLE_INPUT
