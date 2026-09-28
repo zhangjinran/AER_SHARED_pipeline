@@ -1,0 +1,11 @@
+# This repository versions source code and documentation only.
+/*
+!/.gitignore
+!/code/
+!/docs/
+
+# Scientific inputs and editor recovery files are not source code.
+/code/*.mat
+/code/**/*.mat
+/code/*.asv
+/code/**/*.asv

@@ -1,0 +1,6 @@
+param([string]$RunId='produce\run_marine_v2_200701_200702_001',[string]$MatlabExe='matlab.exe')
+$ErrorActionPreference='Stop'; if($RunId -notmatch '^produce[\\/]run_[A-Za-z0-9_-]+$'){if($RunId -match '^[A-Za-z0-9_-]+$'){$RunId="produce\$RunId"}else{throw 'RunId must be produce\run_<id> (or a bare run_<id>, which is placed under produce).'}}; $RunId=$RunId -replace '/','\'; $project='F:\AER_SHARED_PIPELINE'; $run=Join-Path $project ('runs\'+$RunId); $log=Join-Path $run 'logs\marine_parameter_refresh_matlab.log'; $out=Join-Path $run 'logs\marine_parameter_refresh_launcher.out.log'; $err=Join-Path $run 'logs\marine_parameter_refresh_launcher.err.log'; New-Item -ItemType Directory -Force -Path (Split-Path $log),(Split-Path $out),(Split-Path $err) | Out-Null
+$prior='F:\AER_SHARED_PIPELINE\runs\produce\run_marine_prior_20260915_001\staging\marine_prior\new_candidate\attempt_002\candidates'; $env:MARINE_REFRESH_RUN_ROOT=$run; $env:MARINE_REFRESH_PRIOR_ROOT=$prior
+$cmd="try, restoredefaultpath, run('$project\code\batch\run_marine_parameter_refresh.m'), exit(0); catch ME, disp(getReport(ME,'extended','hyperlinks','off')); exit(1); end"
+& $MatlabExe -batch $cmd -logfile $log 1> $out 2> $err
+if($LASTEXITCODE -ne 0){throw "Marine parameter refresh failed: $LASTEXITCODE"}; 'MARINE_PARAMETER_REFRESH_LAUNCHER_PASS' | Set-Content $out -Encoding utf8

@@ -1,0 +1,79 @@
+[
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\t_all",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\tall\\t_all",
+    "files": 428,
+    "bytes": 56872844255.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\calipso_stats",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\chapter5\\calipso_stats",
+    "files": 250,
+    "bytes": 22856492212.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\calipso_stats_chapter5_v2",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\chapter5\\calipso_stats_chapter5_v2",
+    "files": 200,
+    "bytes": 12637436178.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\calipso_stats_monthly",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\chapter5\\calipso_stats_monthly",
+    "files": 4,
+    "bytes": 2300656768.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\chapter5_map_stats",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\chapter5\\chapter5_map_stats",
+    "files": 8,
+    "bytes": 575288.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\chapter5_map_stats_v2",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\chapter5\\chapter5_map_stats_v2",
+    "files": 8,
+    "bytes": 594800.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\chapter5_n50_column",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\chapter5\\chapter5_n50_column",
+    "files": 124,
+    "bytes": 7392937.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\clear_air_stats",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\chapter5\\clear_air_stats",
+    "files": 535,
+    "bytes": 282439942.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\ccn_grid",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\ccn\\ccn_grid",
+    "files": 124,
+    "bytes": 1687212.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\ccn_grid_monthly",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\ccn\\ccn_grid_monthly",
+    "files": 3,
+    "bytes": 142097.0,
+    "status": "moved_inventory_verified"
+  },
+  {
+    "source": "F:\\AER_SHARED_PIPELINE\\products\\ccn_v2",
+    "destination": "F:\\AER_SHARED_PIPELINE\\products\\ccn\\ccn_v2",
+    "files": 208,
+    "bytes": 616858236.0,
+    "status": "moved_inventory_verified"
+  }
+]

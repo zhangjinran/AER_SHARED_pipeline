@@ -1,0 +1,12 @@
+S = load('F:\AER_RETRA_CASE\test_CCN_minimal_existing_data_output.mat');
+O = S.Out; T = S.T;
+ccn = O.CCN_25(:);
+ok = isfinite(T.Lon) & isfinite(T.Lat) & isfinite(ccn);
+f = figure('Color','w','Position',[100 100 900 500]);
+scatter(T.Lon(ok),T.Lat(ok),35,ccn(ok),'filled');
+xlim([-180 180]); ylim([-90 90]); grid on; axis equal;
+xlabel('Longitude'); ylabel('Latitude');
+title('CCN smoke-test spatial distribution (0.25%)');
+cb=colorbar; cb.Label.String='CCN (cm^{-3})';
+exportgraphics(f,'CCN_smoke_test_map.png','Resolution',180);
+close(f);
