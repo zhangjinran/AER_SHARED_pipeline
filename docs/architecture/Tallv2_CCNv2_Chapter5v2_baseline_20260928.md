@@ -25,7 +25,7 @@ Chapter5_v2 月产品另使用正式日晴空统计：
 | `Parameter_OMCAM_v2.mat` | `A5C581CA5553872EA2AD4F367EDD55327516D2986C92363F2A14A373536E746C` |
 | `Extinction_Normalized_v2.mat` | `BB07736C0C1E0CE1C66BC5B5875A4DBF54F29CB36204245D3BEC042D9F84865F` |
 
-`Parameter_OMCAM_v2.mat` 的 `data` 结构沿用旧六类型数组顺序 `[CM, DU, PC, CC, PD, SM]`；运行核心只使用五个物理组分 `[CM, DU, PC, CC, SM]`。逐项核对后，五组分的 10 个粒径/折射率数组字段与 `code/CCN_v2/config/ccn_v2_config.m` 完全一致（数值容差 `1e-9`）。其中最新版 Marine 明确为：
+`Parameter_OMCAM_v2.mat` 的 `data` 结构沿用旧六类型数组顺序 `[CM, DU, PC, CC, PD, SM]`；运行核心只使用五个物理组分 `[CM, DU, PC, CC, SM]`。逐项核对后，五组分的 10 个粒径/折射率数组字段与 `code/utils/ccn/ccnv2/config/ccn_v2_config.m` 完全一致（数值容差 `1e-9`）。其中最新版 Marine 明确为：
 
 | 参数 | Fine | Coarse |
 |---|---:|---:|
@@ -61,11 +61,11 @@ Chapter5_v2 **共用上述组分反演物理核心**，因此上表关于先验�
 
 ## 实际运行调用链
 
-2007-01 Tallv2 下游由 `code/batch/start_Tallv2_month_downstream.ps1` 和 `code/batch/run_Tallv2_month_downstream.m` 按 CCN → Chapter5 → Chapter4 串行控制。本节只冻结 CCN_v2 与 Chapter5_v2；Chapter4 是独立遗留反演支路，不属于共同 OMCAM-v2 基线。
+2007-01 Tallv2 下游由 `code/run/tall/tallv2/start_Tallv2_month_downstream.ps1` 和 `code/run/tall/tallv2/run_Tallv2_month_downstream.m` 按 CCN → Chapter5 → Chapter4 串行控制。本节只冻结 CCN_v2 与 Chapter5_v2；Chapter4 是独立遗留反演支路，不属于共同 OMCAM-v2 基线。
 
 ### CCN_v2
 
-`T_all v2` → `code/CCN_v2/producers/build_ccn_grid_day_v2.m`（显式传入上述先验根目录，读取 `Extinction_Normalized_v2.mat`）→ `code/CCN_v2/science_core/compute_ccn_sample_contributions_v2.m` → `ccn_v2_config.m` 中的五组分最新版参数 → 2°×5°×133 层日 sum/count → `build_ccn_grid_month_v2.m` 池化日 sum/count → 正式月产品 → 只读月产品绘图。
+`T_all v2` → `code/utils/ccn/ccnv2/producers/build_ccn_grid_day_v2.m`（显式传入上述先验根目录，读取 `Extinction_Normalized_v2.mat`）→ `code/utils/ccn/ccnv2/science_core/compute_ccn_sample_contributions_v2.m` → `ccn_v2_config.m` 中的五组分最新版参数 → 2°×5°×133 层日 sum/count → `build_ccn_grid_month_v2.m` 池化日 sum/count → 正式月产品 → 只读月产品绘图。
 
 运行时的粒径/折射率参数来自 `ccn_v2_config.m`；`Parameter_OMCAM_v2.mat` 是落盘、经过逐项对照的同一先验记录，**不是该逐样本函数当前直接 `load` 的运行文件**。不可把“参数 MAT 存在”等同于“运行代码已读取它”；两者数值一致性是本次单独检查的结果。
 
@@ -75,7 +75,7 @@ Type 5 在原始同一 bin 内拆为 dust+PC，Type 7 拆为 dust+marine。退�
 
 ### Chapter5_v2
 
-`T_all v2` → `code/Chapter5_v2/producers/build_calipso_stats_ch5_v2_day.m` → `chapter5_v2_config.m` 明确读取同一先验根目录中的 `Extinction_Normalized_v2.mat` → `compute_chapter5_sample_contributions_v2.m` 调用 CCN_v2 的 `compute_ccn_sample_contributions_v2.m` 获取乘过饱和度系数之前的五组分 N50/N100 → 同一 `sample_id` 与 `original_type` 内组合七 Type → 5°×5°、Day/Night 的日 `CALIPSO_STATS_CH5_V2` → 结合正式晴空统计池化月 `CHAPTER5_MAP_STATS_V2` → 绘图。
+`T_all v2` → `code/utils/chapter5/chapter5v2/producers/build_calipso_stats_ch5_v2_day.m` → `chapter5_v2_config.m` 明确读取同一先验根目录中的 `Extinction_Normalized_v2.mat` → `compute_chapter5_sample_contributions_v2.m` 调用 CCN_v2 的 `compute_ccn_sample_contributions_v2.m` 获取乘过饱和度系数之前的五组分 N50/N100 → 同一 `sample_id` 与 `original_type` 内组合七 Type → 5°×5°、Day/Night 的日 `CALIPSO_STATS_CH5_V2` → 结合正式晴空统计池化月 `CHAPTER5_MAP_STATS_V2` → 绘图。
 
 Type 5 的样本值是 dust N100 + PC N50；Type 7 是 dust N100 + marine N50。只允许同一个原始样本的两个组分相加；不得把已经空间聚合的 CCN dust 图与 marine 图相加恢复 Type 7。Chapter5 不使用 CCN 的 `fss`；月均值分母为有效气溶胶数 + 晴空数。因此 Chapter5 图也不能笼统标称七类全为 N50。
 
